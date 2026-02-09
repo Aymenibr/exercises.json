@@ -3,14 +3,22 @@
   "states": {
     "start": {
       "angles": {
+        "shoulder_left": 64.35,
+        "shoulder_right": 62.61,
         "elbow_left": 123.82,
         "elbow_right": 123.29,
-        "knee_left": 138.3,
-        "knee_right": 129.4,
+        "wrist_left": 156.83,
+        "wrist_right": 161.19,
+        "neck_left": 118.24,
+        "neck_right": 115.64,
+        "torso_left": 166.85,
+        "torso_right": 168.68,
         "hip_left": 166.85,
         "hip_right": 168.68,
-        "shoulder_left": 64.35,
-        "shoulder_right": 62.61
+        "knee_left": 138.3,
+        "knee_right": 129.4,
+        "ankle_left": 68.84,
+        "ankle_right": 69.06
       },
       "ratios": {
         "forearm_upperarm_left": 1.291,
@@ -262,14 +270,22 @@
     },
     "end": {
       "angles": {
+        "shoulder_left": 58.67,
+        "shoulder_right": 59.39,
         "elbow_left": 64.0,
         "elbow_right": 91.86,
-        "knee_left": 31.16,
-        "knee_right": 35.79,
+        "wrist_left": 124.66,
+        "wrist_right": 134.25,
+        "neck_left": 132.54,
+        "neck_right": 130.73,
+        "torso_left": 72.81,
+        "torso_right": 75.24,
         "hip_left": 72.81,
         "hip_right": 75.24,
-        "shoulder_left": 58.67,
-        "shoulder_right": 59.39
+        "knee_left": 31.16,
+        "knee_right": 35.79,
+        "ankle_left": 62.39,
+        "ankle_right": 66.73
       },
       "ratios": {
         "forearm_upperarm_left": 0.966,

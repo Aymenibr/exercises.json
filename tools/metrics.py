@@ -57,16 +57,31 @@ def compute_biomechanics(landmarks: List[Landmark]) -> Biomechanics:
     def pt(name: PL) -> np.ndarray:
         return _to_point(landmarks[name.value])
 
-    # Joint angles
+    # Comprehensive joint angles (middle point of each triplet)
+    TRIPLETS = {
+        # Upper body
+        "shoulder_left": (PL.LEFT_ELBOW, PL.LEFT_SHOULDER, PL.LEFT_HIP),
+        "shoulder_right": (PL.RIGHT_ELBOW, PL.RIGHT_SHOULDER, PL.RIGHT_HIP),
+        "elbow_left": (PL.LEFT_SHOULDER, PL.LEFT_ELBOW, PL.LEFT_WRIST),
+        "elbow_right": (PL.RIGHT_SHOULDER, PL.RIGHT_ELBOW, PL.RIGHT_WRIST),
+        "wrist_left": (PL.LEFT_ELBOW, PL.LEFT_WRIST, PL.LEFT_INDEX),
+        "wrist_right": (PL.RIGHT_ELBOW, PL.RIGHT_WRIST, PL.RIGHT_INDEX),
+        "neck_left": (PL.LEFT_HIP, PL.LEFT_SHOULDER, PL.NOSE),
+        "neck_right": (PL.RIGHT_HIP, PL.RIGHT_SHOULDER, PL.NOSE),
+        # Torso / spine approximations
+        "torso_left": (PL.LEFT_KNEE, PL.LEFT_HIP, PL.LEFT_SHOULDER),
+        "torso_right": (PL.RIGHT_KNEE, PL.RIGHT_HIP, PL.RIGHT_SHOULDER),
+        # Lower body
+        "hip_left": (PL.LEFT_SHOULDER, PL.LEFT_HIP, PL.LEFT_KNEE),
+        "hip_right": (PL.RIGHT_SHOULDER, PL.RIGHT_HIP, PL.RIGHT_KNEE),
+        "knee_left": (PL.LEFT_HIP, PL.LEFT_KNEE, PL.LEFT_ANKLE),
+        "knee_right": (PL.RIGHT_HIP, PL.RIGHT_KNEE, PL.RIGHT_ANKLE),
+        "ankle_left": (PL.LEFT_KNEE, PL.LEFT_ANKLE, PL.LEFT_FOOT_INDEX),
+        "ankle_right": (PL.RIGHT_KNEE, PL.RIGHT_ANKLE, PL.RIGHT_FOOT_INDEX),
+    }
+
     angles = {
-        "elbow_left": _angle(pt(PL.LEFT_SHOULDER), pt(PL.LEFT_ELBOW), pt(PL.LEFT_WRIST)),
-        "elbow_right": _angle(pt(PL.RIGHT_SHOULDER), pt(PL.RIGHT_ELBOW), pt(PL.RIGHT_WRIST)),
-        "knee_left": _angle(pt(PL.LEFT_HIP), pt(PL.LEFT_KNEE), pt(PL.LEFT_ANKLE)),
-        "knee_right": _angle(pt(PL.RIGHT_HIP), pt(PL.RIGHT_KNEE), pt(PL.RIGHT_ANKLE)),
-        "hip_left": _angle(pt(PL.LEFT_SHOULDER), pt(PL.LEFT_HIP), pt(PL.LEFT_KNEE)),
-        "hip_right": _angle(pt(PL.RIGHT_SHOULDER), pt(PL.RIGHT_HIP), pt(PL.RIGHT_KNEE)),
-        "shoulder_left": _angle(pt(PL.LEFT_ELBOW), pt(PL.LEFT_SHOULDER), pt(PL.LEFT_HIP)),
-        "shoulder_right": _angle(pt(PL.RIGHT_ELBOW), pt(PL.RIGHT_SHOULDER), pt(PL.RIGHT_HIP)),
+        name: _angle(pt(a), pt(b), pt(c)) for name, (a, b, c) in TRIPLETS.items()
     }
 
     # Limb ratios (dimensionless)

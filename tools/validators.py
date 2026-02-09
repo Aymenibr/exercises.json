@@ -40,6 +40,10 @@ ANGLE_RANGES = {
     "knee": (20.0, 170.0),
     "hip": (20.0, 170.0),
     "shoulder": (20.0, 170.0),
+    "wrist": (0.0, 200.0),
+    "ankle": (0.0, 200.0),
+    "torso": (0.0, 200.0),
+    "neck": (0.0, 200.0),
 }
 
 TORSO_TILT_MAX_DEG = 45.0
@@ -81,12 +85,20 @@ def validate_pose(bio: Biomechanics, landmarks: List[Landmark]) -> ValidationRes
     ranges = [
         ("elbow_left", "elbow"),
         ("elbow_right", "elbow"),
+        ("wrist_left", "wrist"),
+        ("wrist_right", "wrist"),
         ("knee_left", "knee"),
         ("knee_right", "knee"),
+        ("ankle_left", "ankle"),
+        ("ankle_right", "ankle"),
         ("hip_left", "hip"),
         ("hip_right", "hip"),
         ("shoulder_left", "shoulder"),
         ("shoulder_right", "shoulder"),
+        ("torso_left", "torso"),
+        ("torso_right", "torso"),
+        ("neck_left", "neck"),
+        ("neck_right", "neck"),
     ]
     for key, group in ranges:
         lo, hi = ANGLE_RANGES[group]
@@ -99,9 +111,13 @@ def validate_pose(bio: Biomechanics, landmarks: List[Landmark]) -> ValidationRes
     # Left/right symmetry
     pairs = [
         ("elbow_left", "elbow_right"),
+        ("wrist_left", "wrist_right"),
         ("knee_left", "knee_right"),
+        ("ankle_left", "ankle_right"),
         ("hip_left", "hip_right"),
         ("shoulder_left", "shoulder_right"),
+        ("torso_left", "torso_right"),
+        ("neck_left", "neck_right"),
     ]
     for left, right in pairs:
         l_val, r_val = bio.angles[left], bio.angles[right]
