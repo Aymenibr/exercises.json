@@ -1,0 +1,7 @@
+mediapipe==0.10.14
+opencv-python>=4.8.0
+numpy==1.26.4
+ml-dtypes==0.3.2
+matplotlib>=3.8.0
+contourpy==1.2.0
+jsonschema>=4.22.0

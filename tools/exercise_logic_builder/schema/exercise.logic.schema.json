@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Exercise Logic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["exercise", "states", "rep_logic", "tolerance"],
+  "properties": {
+    "exercise": { "type": "string" },
+    "states": {
+      "type": "object",
+      "required": ["start", "end"],
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "object",
+          "required": ["angles", "ratios", "orientation"],
+          "additionalProperties": false,
+          "properties": {
+            "angles": { "type": "object", "additionalProperties": { "type": "number" } },
+            "ratios": { "type": "object", "additionalProperties": { "type": "number" } },
+            "orientation": { "type": "object", "additionalProperties": { "type": "number" } },
+            "landmarks": {
+              "type": "object",
+              "required": ["ordered_names", "points"],
+              "properties": {
+                "ordered_names": { "type": "array", "items": { "type": "string" } },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": { "type": "number" },
+                      "y": { "type": "number" },
+                      "z": { "type": "number" },
+                      "visibility": { "type": "number" }
+                    },
+                    "required": ["x", "y", "z", "visibility"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "end": {
+          "type": "object",
+          "required": ["angles", "ratios", "orientation"],
+          "additionalProperties": false,
+          "properties": {
+            "angles": { "type": "object", "additionalProperties": { "type": "number" } },
+            "ratios": { "type": "object", "additionalProperties": { "type": "number" } },
+            "orientation": { "type": "object", "additionalProperties": { "type": "number" } },
+            "landmarks": {
+              "type": "object",
+              "required": ["ordered_names", "points"],
+              "properties": {
+                "ordered_names": { "type": "array", "items": { "type": "string" } },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": { "type": "number" },
+                      "y": { "type": "number" },
+                      "z": { "type": "number" },
+                      "visibility": { "type": "number" }
+                    },
+                    "required": ["x", "y", "z", "visibility"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    },
+    "rep_logic": { "type": "string" },
+    "tolerance": {
+      "type": "object",
+      "required": ["angle_deg", "ratio_pct"],
+      "additionalProperties": false,
+      "properties": {
+        "angle_deg": { "type": "number" },
+        "ratio_pct": { "type": "number" }
+      }
+    },
+    "coco": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start_keypoints": { "type": ["array", "null"], "items": { "type": "number" } },
+        "end_keypoints": { "type": ["array", "null"], "items": { "type": "number" } },
+        "format": { "type": "string" }
+      }
+    }
+  }
+}
