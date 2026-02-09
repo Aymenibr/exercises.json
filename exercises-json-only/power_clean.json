@@ -1,0 +1,703 @@
+{
+  "metadata": {
+    "name": "Power Clean",
+    "force": "pull",
+    "level": "intermediate",
+    "mechanic": "compound",
+    "equipment": "barbell",
+    "primaryMuscles": [
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "forearms",
+      "glutes",
+      "lower back",
+      "middle back",
+      "quadriceps",
+      "shoulders",
+      "traps",
+      "triceps"
+    ],
+    "instructions": [
+      "Stand with your feet slightly wider than shoulder width apart and toes pointing out slightly.",
+      "Squat down and grasp bar with a closed, pronated grip. Your hands should be slightly wider than shoulder width apart outside knees with elbows fully extended.",
+      "Place the bar about 1 inch in front of your shins and over the balls of your feet.",
+      "Your back should be flat or slightly arched, your chest held up and out and your shoulder blades should be retracted.",
+      "Keep your head in a neutral position (in line with vertebral column and not tilted or rotated) with your eyes focused straight ahead. Inhale during this phase.",
+      "Lift the bar from the floor by forcefully extending the hips and the knees as you exhale. Tip: The upper torso should maintain the same angle. Do not bend at the waist yet and do not let the hips rise before the shoulders (this would have the effect of pushing the glutes in the air and stretching the hamstrings.",
+      "Keep elbows fully extended with the head in a neutral position and the shoulders over the bar.",
+      "As the bar raises keep it as close to the shins as possible.",
+      "As the bar passes the knees, thrust your hips forward and slightly bend the knees to avoid locking them. Tip: At this point your thighs should be against the bar.",
+      "Keep the back flat or slightly arched, elbows fully extended and your head neutral. Tip: You will hold your breath until the next phase.",
+      "Inhale and then forcefully and quickly extend your hips and knees and stand on your toes.",
+      "Keep the bar as close to your body as possible. Tip: Your back should be flat with the elbows pointed out to the sides and your head in a neutral position. Also, keep your shoulders over the bar and arms straight as long as possible.",
+      "When your lower body joints are fully extended, shrug the shoulders upward rapidly without letting the elbows flex yet. Exhale during this portion of the movement.",
+      "As the shoulders reach their highest elevation flex your elbows to begin pulling your body under the bar.",
+      "Continue to pull the arms as high and as long as possible. Tip: Due to the explosive nature of this phase, your torso will be erect or with an arched back, your head will be tilted back slightly and your feet may lose contact with the floor.",
+      "After the lower body has fully extended and the bar reaches near maximal height, pull your body under the bar and rotate the arms around and under the bar.",
+      "Simultaneously, flex the hips and knees into a quarter squat position.",
+      "Once the arms are under the bar, inhale and then lift your elbows to position the upper arms parallel to the floor. Rack the bar across the front of your collar bones and front shoulder muscles.",
+      "Catch the bar with an erect and tight torso, a neutral head position and flat feet. Exhale during this movement.",
+      "Stand up by extending the hips and knees to a fully erect position.",
+      "Lower the bar by gradually reducing the muscular tension of the arms to allow a controlled descent of the bar to the thighs. Inhale during this movement.",
+      "Simultaneously flex the hips and knees to cushion the impact of the bar on the thighs.",
+      "Squat down with the elbows fully extended until the bar touches the floor.",
+      "Start over at Phase 1 and repeat for the recommended amount of repetitions."
+    ],
+    "category": "strength"
+  },
+  "logic": {
+    "exercise": "Power Clean",
+    "states": {
+      "start": {
+        "angles": {
+          "shoulder_left": 66.27,
+          "shoulder_right": 76.05,
+          "elbow_left": 148.65,
+          "elbow_right": 160.98,
+          "wrist_left": 153.21,
+          "wrist_right": 149.76,
+          "neck_left": 163.56,
+          "neck_right": 159.71,
+          "torso_left": 34.06,
+          "torso_right": 35.07,
+          "hip_left": 34.06,
+          "hip_right": 35.07,
+          "knee_left": 37.36,
+          "knee_right": 41.27,
+          "ankle_left": 48.81,
+          "ankle_right": 51.45
+        },
+        "ratios": {
+          "forearm_upperarm_left": 1.095,
+          "forearm_upperarm_right": 1.236,
+          "shin_thigh_left": 0.755,
+          "shin_thigh_right": 0.787
+        },
+        "orientation": {
+          "torso_tilt_deg": 63.6,
+          "hip_shoulder_alignment_deg": 0.29
+        },
+        "landmarks": {
+          "ordered_names": [
+            "nose",
+            "left_eye_inner",
+            "left_eye",
+            "left_eye_outer",
+            "right_eye_inner",
+            "right_eye",
+            "right_eye_outer",
+            "left_ear",
+            "right_ear",
+            "mouth_left",
+            "mouth_right",
+            "left_shoulder",
+            "right_shoulder",
+            "left_elbow",
+            "right_elbow",
+            "left_wrist",
+            "right_wrist",
+            "left_pinky",
+            "right_pinky",
+            "left_index",
+            "right_index",
+            "left_thumb",
+            "right_thumb",
+            "left_hip",
+            "right_hip",
+            "left_knee",
+            "right_knee",
+            "left_ankle",
+            "right_ankle",
+            "left_heel",
+            "right_heel",
+            "left_foot_index",
+            "right_foot_index"
+          ],
+          "points": [
+            {
+              "x": 0.5689665079116821,
+              "y": 0.47317183017730713,
+              "z": -0.46635544300079346,
+              "visibility": 0.9999967813491821
+            },
+            {
+              "x": 0.5726981163024902,
+              "y": 0.4593732953071594,
+              "z": -0.44437235593795776,
+              "visibility": 0.9999885559082031
+            },
+            {
+              "x": 0.5754934549331665,
+              "y": 0.4596007466316223,
+              "z": -0.4444325268268585,
+              "visibility": 0.9999843835830688
+            },
+            {
+              "x": 0.5780197381973267,
+              "y": 0.4597316384315491,
+              "z": -0.44455015659332275,
+              "visibility": 0.9999825954437256
+            },
+            {
+              "x": 0.5636329650878906,
+              "y": 0.45865100622177124,
+              "z": -0.4505404829978943,
+              "visibility": 0.9999827146530151
+            },
+            {
+              "x": 0.5591104030609131,
+              "y": 0.45832860469818115,
+              "z": -0.4506063163280487,
+              "visibility": 0.9999808073043823
+            },
+            {
+              "x": 0.5547446012496948,
+              "y": 0.4581298232078552,
+              "z": -0.450644850730896,
+              "visibility": 0.9999791383743286
+            },
+            {
+              "x": 0.5786440372467041,
+              "y": 0.4654585123062134,
+              "z": -0.322523832321167,
+              "visibility": 0.9999523162841797
+            },
+            {
+              "x": 0.5449299812316895,
+              "y": 0.4626502990722656,
+              "z": -0.35169142484664917,
+              "visibility": 0.999944806098938
+            },
+            {
+              "x": 0.5720428824424744,
+              "y": 0.4881587624549866,
+              "z": -0.4211813509464264,
+              "visibility": 0.9999991655349731
+            },
+            {
+              "x": 0.5609143972396851,
+              "y": 0.4872363209724426,
+              "z": -0.4296112656593323,
+              "visibility": 0.9999992847442627
+            },
+            {
+              "x": 0.5989351868629456,
+              "y": 0.5619844794273376,
+              "z": -0.22895053029060364,
+              "visibility": 0.999958872795105
+            },
+            {
+              "x": 0.49994364380836487,
+              "y": 0.5517871975898743,
+              "z": -0.27966490387916565,
+              "visibility": 0.9998414516448975
+            },
+            {
+              "x": 0.6068087816238403,
+              "y": 0.6806979179382324,
+              "z": -0.23292632400989532,
+              "visibility": 0.9876366257667542
+            },
+            {
+              "x": 0.47627952694892883,
+              "y": 0.6654948592185974,
+              "z": -0.30345556139945984,
+              "visibility": 0.9881541728973389
+            },
+            {
+              "x": 0.618053138256073,
+              "y": 0.789142370223999,
+              "z": -0.3042827248573303,
+              "visibility": 0.9342519640922546
+            },
+            {
+              "x": 0.4618963599205017,
+              "y": 0.7915945053100586,
+              "z": -0.3766254782676697,
+              "visibility": 0.9500536322593689
+            },
+            {
+              "x": 0.6265153884887695,
+              "y": 0.8184466361999512,
+              "z": -0.3344128429889679,
+              "visibility": 0.8800261616706848
+            },
+            {
+              "x": 0.4533943831920624,
+              "y": 0.8210146427154541,
+              "z": -0.40897539258003235,
+              "visibility": 0.915060818195343
+            },
+            {
+              "x": 0.6168955564498901,
+              "y": 0.8201995491981506,
+              "z": -0.35695168375968933,
+              "visibility": 0.8938539028167725
+            },
+            {
+              "x": 0.46383750438690186,
+              "y": 0.8246324062347412,
+              "z": -0.4327118694782257,
+              "visibility": 0.9178222417831421
+            },
+            {
+              "x": 0.6125637888908386,
+              "y": 0.8127843737602234,
+              "z": -0.31549862027168274,
+              "visibility": 0.8943045735359192
+            },
+            {
+              "x": 0.4696332812309265,
+              "y": 0.8144512176513672,
+              "z": -0.3873085379600525,
+              "visibility": 0.9022803902626038
+            },
+            {
+              "x": 0.5573998689651489,
+              "y": 0.685975968837738,
+              "z": 0.018564928323030472,
+              "visibility": 0.9999635219573975
+            },
+            {
+              "x": 0.5059542655944824,
+              "y": 0.6809358596801758,
+              "z": -0.018497351557016373,
+              "visibility": 0.9998559951782227
+            },
+            {
+              "x": 0.583527147769928,
+              "y": 0.7341932058334351,
+              "z": -0.3547588288784027,
+              "visibility": 0.9817994236946106
+            },
+            {
+              "x": 0.5082338452339172,
+              "y": 0.7323824167251587,
+              "z": -0.35383397340774536,
+              "visibility": 0.9702750444412231
+            },
+            {
+              "x": 0.563089907169342,
+              "y": 0.8766124844551086,
+              "z": -0.10900703817605972,
+              "visibility": 0.9770143628120422
+            },
+            {
+              "x": 0.49140840768814087,
+              "y": 0.8754000663757324,
+              "z": -0.12896443903446198,
+              "visibility": 0.9866116046905518
+            },
+            {
+              "x": 0.5523656010627747,
+              "y": 0.8976306915283203,
+              "z": -0.08979015797376633,
+              "visibility": 0.9454584121704102
+            },
+            {
+              "x": 0.4916641116142273,
+              "y": 0.8970992565155029,
+              "z": -0.11199377477169037,
+              "visibility": 0.9295909404754639
+            },
+            {
+              "x": 0.581823468208313,
+              "y": 0.912903904914856,
+              "z": -0.21555137634277344,
+              "visibility": 0.9719316363334656
+            },
+            {
+              "x": 0.4949159622192383,
+              "y": 0.9209460020065308,
+              "z": -0.2612389624118805,
+              "visibility": 0.9743082523345947
+            }
+          ]
+        }
+      },
+      "end": {
+        "angles": {
+          "shoulder_left": 39.34,
+          "shoulder_right": 41.55,
+          "elbow_left": 153.03,
+          "elbow_right": 141.8,
+          "wrist_left": 169.22,
+          "wrist_right": 170.23,
+          "neck_left": 91.54,
+          "neck_right": 94.76,
+          "torso_left": 169.87,
+          "torso_right": 167.65,
+          "hip_left": 169.87,
+          "hip_right": 167.65,
+          "knee_left": 144.82,
+          "knee_right": 146.37,
+          "ankle_left": 94.09,
+          "ankle_right": 90.78
+        },
+        "ratios": {
+          "forearm_upperarm_left": 1.988,
+          "forearm_upperarm_right": 1.473,
+          "shin_thigh_left": 0.886,
+          "shin_thigh_right": 0.932
+        },
+        "orientation": {
+          "torso_tilt_deg": 26.39,
+          "hip_shoulder_alignment_deg": 0.83
+        },
+        "landmarks": {
+          "ordered_names": [
+            "nose",
+            "left_eye_inner",
+            "left_eye",
+            "left_eye_outer",
+            "right_eye_inner",
+            "right_eye",
+            "right_eye_outer",
+            "left_ear",
+            "right_ear",
+            "mouth_left",
+            "mouth_right",
+            "left_shoulder",
+            "right_shoulder",
+            "left_elbow",
+            "right_elbow",
+            "left_wrist",
+            "right_wrist",
+            "left_pinky",
+            "right_pinky",
+            "left_index",
+            "right_index",
+            "left_thumb",
+            "right_thumb",
+            "left_hip",
+            "right_hip",
+            "left_knee",
+            "right_knee",
+            "left_ankle",
+            "right_ankle",
+            "left_heel",
+            "right_heel",
+            "left_foot_index",
+            "right_foot_index"
+          ],
+          "points": [
+            {
+              "x": 0.5076343417167664,
+              "y": 0.21123260259628296,
+              "z": -0.035530176013708115,
+              "visibility": 0.9999995231628418
+            },
+            {
+              "x": 0.5108643770217896,
+              "y": 0.20652851462364197,
+              "z": -0.016596036031842232,
+              "visibility": 0.9999992847442627
+            },
+            {
+              "x": 0.5133705139160156,
+              "y": 0.20761024951934814,
+              "z": -0.016590556129813194,
+              "visibility": 0.999998927116394
+            },
+            {
+              "x": 0.5158094763755798,
+              "y": 0.2088143527507782,
+              "z": -0.016581246629357338,
+              "visibility": 0.9999991655349731
+            },
+            {
+              "x": 0.5024004578590393,
+              "y": 0.2058861255645752,
+              "z": -0.01848800852894783,
+              "visibility": 0.9999994039535522
+            },
+            {
+              "x": 0.4992299973964691,
+              "y": 0.2066463828086853,
+              "z": -0.01851820945739746,
+              "visibility": 0.9999992847442627
+            },
+            {
+              "x": 0.49607592821121216,
+              "y": 0.2077271044254303,
+              "z": -0.018499666824936867,
+              "visibility": 0.9999995231628418
+            },
+            {
+              "x": 0.518635094165802,
+              "y": 0.22034955024719238,
+              "z": 0.08357377350330353,
+              "visibility": 0.9999983310699463
+            },
+            {
+              "x": 0.4908182621002197,
+              "y": 0.22017616033554077,
+              "z": 0.07416203618049622,
+              "visibility": 0.9999995231628418
+            },
+            {
+              "x": 0.5132943391799927,
+              "y": 0.22708985209465027,
+              "z": 0.0012992998817935586,
+              "visibility": 0.9999994039535522
+            },
+            {
+              "x": 0.5005561709403992,
+              "y": 0.2258004993200302,
+              "z": -0.001457677222788334,
+              "visibility": 0.9999996423721313
+            },
+            {
+              "x": 0.5511557459831238,
+              "y": 0.29619255661964417,
+              "z": 0.12412405014038086,
+              "visibility": 0.9999966621398926
+            },
+            {
+              "x": 0.4643470346927643,
+              "y": 0.2923566997051239,
+              "z": 0.0870862528681755,
+              "visibility": 0.9999966621398926
+            },
+            {
+              "x": 0.5933529734611511,
+              "y": 0.35365599393844604,
+              "z": 0.02719283476471901,
+              "visibility": 0.9937826991081238
+            },
+            {
+              "x": 0.41781798005104065,
+              "y": 0.3529786467552185,
+              "z": -0.00016281403077300638,
+              "visibility": 0.9987384676933289
+            },
+            {
+              "x": 0.6125600337982178,
+              "y": 0.38794413208961487,
+              "z": -0.20878328382968903,
+              "visibility": 0.9964966177940369
+            },
+            {
+              "x": 0.44268855452537537,
+              "y": 0.39237579703330994,
+              "z": -0.16451801359653473,
+              "visibility": 0.9967575669288635
+            },
+            {
+              "x": 0.6229895949363708,
+              "y": 0.4116816520690918,
+              "z": -0.2603549659252167,
+              "visibility": 0.9925053715705872
+            },
+            {
+              "x": 0.44672518968582153,
+              "y": 0.4134242832660675,
+              "z": -0.2030276507139206,
+              "visibility": 0.9899501800537109
+            },
+            {
+              "x": 0.6150888800621033,
+              "y": 0.41071778535842896,
+              "z": -0.27585330605506897,
+              "visibility": 0.993030846118927
+            },
+            {
+              "x": 0.45749175548553467,
+              "y": 0.40965110063552856,
+              "z": -0.21291771531105042,
+              "visibility": 0.9898561239242554
+            },
+            {
+              "x": 0.6089217662811279,
+              "y": 0.40437138080596924,
+              "z": -0.22106535732746124,
+              "visibility": 0.9896313548088074
+            },
+            {
+              "x": 0.45853307843208313,
+              "y": 0.40357327461242676,
+              "z": -0.17070305347442627,
+              "visibility": 0.9864856004714966
+            },
+            {
+              "x": 0.544879674911499,
+              "y": 0.5070464015007019,
+              "z": 0.02096596732735634,
+              "visibility": 0.9998679161071777
+            },
+            {
+              "x": 0.4939747452735901,
+              "y": 0.5100350975990295,
+              "z": -0.021066052839159966,
+              "visibility": 0.9998981952667236
+            },
+            {
+              "x": 0.5635791420936584,
+              "y": 0.6882548332214355,
+              "z": -0.04086858034133911,
+              "visibility": 0.9721375703811646
+            },
+            {
+              "x": 0.48618003726005554,
+              "y": 0.6877465844154358,
+              "z": -0.07988865673542023,
+              "visibility": 0.9838196635246277
+            },
+            {
+              "x": 0.5593042373657227,
+              "y": 0.8523305058479309,
+              "z": 0.005177690647542477,
+              "visibility": 0.9678481221199036
+            },
+            {
+              "x": 0.47841620445251465,
+              "y": 0.8559939861297607,
+              "z": -0.033724334090948105,
+              "visibility": 0.9784683585166931
+            },
+            {
+              "x": 0.5465092658996582,
+              "y": 0.8737599849700928,
+              "z": 0.0020098290406167507,
+              "visibility": 0.7979024052619934
+            },
+            {
+              "x": 0.4816657602787018,
+              "y": 0.8746715188026428,
+              "z": -0.03655533865094185,
+              "visibility": 0.7780946493148804
+            },
+            {
+              "x": 0.579967200756073,
+              "y": 0.8981910347938538,
+              "z": -0.12059217691421509,
+              "visibility": 0.9607407450675964
+            },
+            {
+              "x": 0.4906049072742462,
+              "y": 0.8941851854324341,
+              "z": -0.16384899616241455,
+              "visibility": 0.963230311870575
+            }
+          ]
+        }
+      }
+    },
+    "rep_logic": "start -> end",
+    "tolerance": {
+      "angle_deg": 15,
+      "ratio_pct": 0.15
+    },
+    "coco": {
+      "start_keypoints": [
+        0.5689665079116821,
+        0.47317183017730713,
+        0.9999967813491821,
+        0.5754934549331665,
+        0.4596007466316223,
+        0.9999843835830688,
+        0.5591104030609131,
+        0.45832860469818115,
+        0.9999808073043823,
+        0.5786440372467041,
+        0.4654585123062134,
+        0.9999523162841797,
+        0.5449299812316895,
+        0.4626502990722656,
+        0.999944806098938,
+        0.5989351868629456,
+        0.5619844794273376,
+        0.999958872795105,
+        0.49994364380836487,
+        0.5517871975898743,
+        0.9998414516448975,
+        0.6068087816238403,
+        0.6806979179382324,
+        0.9876366257667542,
+        0.47627952694892883,
+        0.6654948592185974,
+        0.9881541728973389,
+        0.618053138256073,
+        0.789142370223999,
+        0.9342519640922546,
+        0.4618963599205017,
+        0.7915945053100586,
+        0.9500536322593689,
+        0.5573998689651489,
+        0.685975968837738,
+        0.9999635219573975,
+        0.5059542655944824,
+        0.6809358596801758,
+        0.9998559951782227,
+        0.583527147769928,
+        0.7341932058334351,
+        0.9817994236946106,
+        0.5082338452339172,
+        0.7323824167251587,
+        0.9702750444412231,
+        0.563089907169342,
+        0.8766124844551086,
+        0.9770143628120422,
+        0.49140840768814087,
+        0.8754000663757324,
+        0.9866116046905518
+      ],
+      "end_keypoints": [
+        0.5076343417167664,
+        0.21123260259628296,
+        0.9999995231628418,
+        0.5133705139160156,
+        0.20761024951934814,
+        0.999998927116394,
+        0.4992299973964691,
+        0.2066463828086853,
+        0.9999992847442627,
+        0.518635094165802,
+        0.22034955024719238,
+        0.9999983310699463,
+        0.4908182621002197,
+        0.22017616033554077,
+        0.9999995231628418,
+        0.5511557459831238,
+        0.29619255661964417,
+        0.9999966621398926,
+        0.4643470346927643,
+        0.2923566997051239,
+        0.9999966621398926,
+        0.5933529734611511,
+        0.35365599393844604,
+        0.9937826991081238,
+        0.41781798005104065,
+        0.3529786467552185,
+        0.9987384676933289,
+        0.6125600337982178,
+        0.38794413208961487,
+        0.9964966177940369,
+        0.44268855452537537,
+        0.39237579703330994,
+        0.9967575669288635,
+        0.544879674911499,
+        0.5070464015007019,
+        0.9998679161071777,
+        0.4939747452735901,
+        0.5100350975990295,
+        0.9998981952667236,
+        0.5635791420936584,
+        0.6882548332214355,
+        0.9721375703811646,
+        0.48618003726005554,
+        0.6877465844154358,
+        0.9838196635246277,
+        0.5593042373657227,
+        0.8523305058479309,
+        0.9678481221199036,
+        0.47841620445251465,
+        0.8559939861297607,
+        0.9784683585166931
+      ],
+      "format": "coco-17-[x,y,visibility]*17 (normalized)"
+    }
+  }
+}
