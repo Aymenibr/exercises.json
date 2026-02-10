@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "defaultExerciseId": "press",
+  "exercises": [
+    {
+      "id": "press",
+      "slug": "press",
+      "name": "Overhead Press",
+      "nameAr": "ضغط فوق الرأس",
+      "hint": "Press both arms overhead, then lower to shoulder height.",
+      "hintAr": "ادفع الذراعين فوق الرأس ثم اخفضهما إلى مستوى الكتف.",
+      "definitionKey": "overhead_press"
+    },
+    {
+      "id": "bicep_curl_both",
+      "slug": "bicep-curl",
+      "name": "Bicep Curls (Both Arms)",
+      "nameAr": "ثني العضلة ذات الرأسين بالذراعين معًا",
+      "hint": "Curl both forearms up, then lower down. Keep elbows close and move both arms evenly.",
+      "hintAr": "اثنِ الساعدين للأعلى ثم اخفضهما. حافظ على المرفقين قريبين وحرّك الذراعين بالتساوي.",
+      "definitionKey": "bicep_curl_both"
+    }
+  ]
+}

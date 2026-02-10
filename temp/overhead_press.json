@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 1,
+  "id": "overhead_press",
+
+  "comment__about": "Schema v1: guardrail + JSON facts DAG + JSON rules.",
+
+  "guardrail": {
+    "comment__frame_required": "Small room / narrow FOV: starting the workout should NOT require hips/legs. We still validate torso/hips when visible.",
+    "required": ["LEFT_SHOULDER", "RIGHT_SHOULDER", "LEFT_ELBOW", "RIGHT_ELBOW", "LEFT_WRIST", "RIGHT_WRIST"],
+    "frameRequired": ["LEFT_SHOULDER", "RIGHT_SHOULDER", "LEFT_ELBOW", "RIGHT_ELBOW", "LEFT_WRIST", "RIGHT_WRIST"],
+    "minVisibility": 0.5
+  },
+
+  "thresholds": {
+    "comment__torso": "Torso upright + shoulders/hips level checks (ported from legacy engine.js buildFactsForExercise).",
+    "maxShoulderLevelDiff": 0.08,
+    "maxHipLevelDiff": 0.08,
+
+    "comment__arms_sync": "Left/right elbow angle difference threshold (degrees).",
+    "maxArmSyncDiffDeg": 22,
+
+    "comment__wrists_over_elbows": "Wrists should stay above elbows in the X direction (camera left/right).",
+    "maxWristElbowXDiff": 0.08,
+
+    "comment__progress": "Progress t is computed from wrist height relative to shoulders.",
+    "shoulderBand": 0.2,
+    "minOverheadLift": 0.1,
+
+    "comment__rep_counter": "Stage-2 dynamic rep counter thresholds.",
+    "repElbowAngleBottomDeg": 95,
+    "repElbowAngleTopDeg": 170,
+    "repProgressTopRaw": 0,
+    "repProgressBottomRaw": 1,
+
+    "comment__progress_messages": "Message thresholds (same as old ladder: <0.4 => Press up, <0.78 => Finish press).",
+    "minStartProgress": 0.4,
+    "minFinishProgress": 0.78
+  },
+
+  "repCounter": {
+    "version": 1,
+    "mode": "full_cycle",
+
+    "comment__progress": "Hybrid progress (0..1): average of wrist-height progress and elbow-extension progress. Stored as raw=(1-progress) so we can reuse invertAngleRange mapping.",
+    "progress": {
+      "op": "sub",
+      "a": { "const": 1 },
+      "b": {
+        "op": "avg",
+        "args": [
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": { "op": "avgCoord", "axis": "y", "landmarks": ["LEFT_SHOULDER", "RIGHT_SHOULDER"] },
+                "b": { "op": "avgCoord", "axis": "y", "landmarks": ["LEFT_WRIST", "RIGHT_WRIST"] }
+              },
+              "b": { "ref": "thresholds.shoulderBand" }
+            },
+            "min": { "const": 0 },
+            "max": { "const": 1 }
+          },
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": {
+                  "op": "avg",
+                  "args": [
+                    { "op": "angleDeg2d", "a": "LEFT_SHOULDER", "b": "LEFT_ELBOW", "c": "LEFT_WRIST" },
+                    { "op": "angleDeg2d", "a": "RIGHT_SHOULDER", "b": "RIGHT_ELBOW", "c": "RIGHT_WRIST" }
+                  ]
+                },
+                "b": { "ref": "thresholds.repElbowAngleBottomDeg" }
+              },
+              "b": {
+                "op": "sub",
+                "a": { "ref": "thresholds.repElbowAngleTopDeg" },
+                "b": { "ref": "thresholds.repElbowAngleBottomDeg" }
+              }
+            },
+            "min": { "const": 0 },
+            "max": { "const": 1 }
+          }
+        ]
+      },
+      "map": {
+        "type": "invertAngleRange",
+        "topAngleMaxDegRef": "thresholds.repProgressTopRaw",
+        "bottomAngleMinDegRef": "thresholds.repProgressBottomRaw"
+      }
+    },
+
+    "comment__progressSides": "Per-arm progress for sync/ROM checks (raw=(1-progress) per side).",
+    "progressSides": {
+      "left": {
+        "op": "sub",
+        "a": { "const": 1 },
+        "b": {
+          "op": "avg",
+          "args": [
+            {
+              "op": "clamp",
+              "value": {
+                "op": "div",
+                "a": { "op": "sub", "a": { "op": "coord", "landmark": "LEFT_SHOULDER", "axis": "y" }, "b": { "op": "coord", "landmark": "LEFT_WRIST", "axis": "y" } },
+                "b": { "ref": "thresholds.shoulderBand" }
+              },
+              "min": { "const": 0 },
+              "max": { "const": 1 }
+            },
+            {
+              "op": "clamp",
+              "value": {
+                "op": "div",
+                "a": { "op": "sub", "a": { "op": "angleDeg2d", "a": "LEFT_SHOULDER", "b": "LEFT_ELBOW", "c": "LEFT_WRIST" }, "b": { "ref": "thresholds.repElbowAngleBottomDeg" } },
+                "b": { "op": "sub", "a": { "ref": "thresholds.repElbowAngleTopDeg" }, "b": { "ref": "thresholds.repElbowAngleBottomDeg" } }
+              },
+              "min": { "const": 0 },
+              "max": { "const": 1 }
+            }
+          ]
+        }
+      },
+      "right": {
+        "op": "sub",
+        "a": { "const": 1 },
+        "b": {
+          "op": "avg",
+          "args": [
+            {
+              "op": "clamp",
+              "value": {
+                "op": "div",
+                "a": { "op": "sub", "a": { "op": "coord", "landmark": "RIGHT_SHOULDER", "axis": "y" }, "b": { "op": "coord", "landmark": "RIGHT_WRIST", "axis": "y" } },
+                "b": { "ref": "thresholds.shoulderBand" }
+              },
+              "min": { "const": 0 },
+              "max": { "const": 1 }
+            },
+            {
+              "op": "clamp",
+              "value": {
+                "op": "div",
+                "a": { "op": "sub", "a": { "op": "angleDeg2d", "a": "RIGHT_SHOULDER", "b": "RIGHT_ELBOW", "c": "RIGHT_WRIST" }, "b": { "ref": "thresholds.repElbowAngleBottomDeg" } },
+                "b": { "op": "sub", "a": { "ref": "thresholds.repElbowAngleTopDeg" }, "b": { "ref": "thresholds.repElbowAngleBottomDeg" } }
+              },
+              "min": { "const": 0 },
+              "max": { "const": 1 }
+            }
+          ]
+        }
+      }
+    },
+
+    "smoothing": {
+      "emaAlpha": 0.30
+    },
+
+    "start": {
+      "comment__about": "Start a rep when leaving the bottom with upward motion.",
+      "leaveBottomProgress": 0.22,
+      "minUpVel": 0.00025
+    },
+
+    "extremes": {
+      "topProgressMin": 0.8,
+      "bottomProgressMax": 0.18
+    },
+
+    "quality": {
+      "warnBadFraction": 0.15,
+      "rejectBadFraction": 0.30,
+      "minRepMs": 1500,
+      "minDownMs": 600,
+      "maxRepMs": 9000,
+      "syncDelta": 0.20,
+      "maxSwayRatio": 0.14,
+      "maxProgressVelAbs": 0.006
+    }
+  },
+
+  "facts": {
+    "bothArmsVisible": {
+      "op": "allVisible",
+      "landmarks": ["LEFT_SHOULDER", "RIGHT_SHOULDER", "LEFT_ELBOW", "RIGHT_ELBOW", "LEFT_WRIST", "RIGHT_WRIST"],
+      "minVisibility": { "ref": "guardrail.minVisibility" }
+    },
+
+    "hipsVisible": {
+      "op": "allVisible",
+      "landmarks": ["LEFT_HIP", "RIGHT_HIP"],
+      "minVisibility": { "ref": "guardrail.minVisibility" }
+    },
+
+    "avgShoulderY": {
+      "op": "avgCoord",
+      "axis": "y",
+      "landmarks": ["LEFT_SHOULDER", "RIGHT_SHOULDER"]
+    },
+
+    "avgHipY": {
+      "op": "avgCoord",
+      "axis": "y",
+      "landmarks": ["LEFT_HIP", "RIGHT_HIP"]
+    },
+
+    "shouldersAboveHips": {
+      "op": "or",
+      "args": [
+        { "op": "not", "value": { "fact": "hipsVisible" } },
+        { "op": "lt", "a": { "fact": "avgShoulderY" }, "b": { "fact": "avgHipY" } }
+      ]
+    },
+
+    "shouldersLevel": {
+      "op": "lte",
+      "a": {
+        "op": "absDiffCoord",
+        "axis": "y",
+        "a": "LEFT_SHOULDER",
+        "b": "RIGHT_SHOULDER"
+      },
+      "b": { "ref": "thresholds.maxShoulderLevelDiff" }
+    },
+
+    "hipsLevel": {
+      "op": "or",
+      "args": [
+        { "op": "not", "value": { "fact": "hipsVisible" } },
+        {
+          "op": "lte",
+          "a": {
+            "op": "absDiffCoord",
+            "axis": "y",
+            "a": "LEFT_HIP",
+            "b": "RIGHT_HIP"
+          },
+          "b": { "ref": "thresholds.maxHipLevelDiff" }
+        }
+      ]
+    },
+
+    "torsoOk": {
+      "op": "and",
+      "args": [{ "fact": "shouldersAboveHips" }, { "fact": "shouldersLevel" }, { "fact": "hipsLevel" }]
+    },
+
+    "leftElbowAngle": {
+      "op": "angleDeg",
+      "a": "LEFT_SHOULDER",
+      "b": "LEFT_ELBOW",
+      "c": "LEFT_WRIST"
+    },
+
+    "rightElbowAngle": {
+      "op": "angleDeg",
+      "a": "RIGHT_SHOULDER",
+      "b": "RIGHT_ELBOW",
+      "c": "RIGHT_WRIST"
+    },
+
+    "armsInSync": {
+      "op": "lte",
+      "a": {
+        "op": "abs",
+        "value": { "op": "sub", "a": { "fact": "leftElbowAngle" }, "b": { "fact": "rightElbowAngle" } }
+      },
+      "b": { "ref": "thresholds.maxArmSyncDiffDeg" }
+    },
+
+    "wristsOverElbows": {
+      "op": "and",
+      "args": [
+        {
+          "op": "lte",
+          "a": {
+            "op": "absDiffCoord",
+            "axis": "x",
+            "a": "LEFT_WRIST",
+            "b": "LEFT_ELBOW"
+          },
+          "b": { "ref": "thresholds.maxWristElbowXDiff" }
+        },
+        {
+          "op": "lte",
+          "a": {
+            "op": "absDiffCoord",
+            "axis": "x",
+            "a": "RIGHT_WRIST",
+            "b": "RIGHT_ELBOW"
+          },
+          "b": { "ref": "thresholds.maxWristElbowXDiff" }
+        }
+      ]
+    },
+
+    "avgWristY": {
+      "op": "avgCoord",
+      "axis": "y",
+      "landmarks": ["LEFT_WRIST", "RIGHT_WRIST"]
+    },
+
+    "pressProgressT": {
+      "op": "pressProgress01",
+      "avgShoulderY": { "fact": "avgShoulderY" },
+      "avgWristY": { "fact": "avgWristY" },
+      "shoulderBand": { "ref": "thresholds.shoulderBand" },
+      "minOverheadLift": { "ref": "thresholds.minOverheadLift" }
+    }
+  },
+
+  "messages": {
+    "comment__note": "IMPORTANT: These strings intentionally match the existing i18n keys used in app.js so L(message) can translate them.",
+
+    "no_pose": "No pose detected.",
+    "both_arms_visible": "Both arms must be visible.",
+    "move_back_visible": "Move back so shoulders, elbows, and wrists are visible.",
+    "stand_tall_level": "Stand tall and keep shoulders level.",
+    "move_arms_together": "Wrong form. Move both arms together.",
+    "wrists_over_elbows": "Wrong form. Wrists over elbows.",
+    "press_up": "Wrong form. Press your arms up overhead.",
+    "finish_press": "Wrong form. Finish the press.",
+    "good": "Good!",
+
+    "comment__rep_counter": "Stage-2 dynamic rep counter messages.",
+    "stage_down": "Press your arms up overhead.",
+    "stage_up": "Lower both arms down.",
+    "curl_evenly": "Move both arms together."
+  },
+
+  "comment__rules": "Rules for json-rules-engine. Facts are computed from pose + the facts DAG. Events reference messageId keys from `messages`.",
+  "rules": [
+    {
+      "name": "Both arms visible",
+      "priority": 1000,
+      "conditions": {
+        "all": [{ "fact": "bothArmsVisible", "operator": "equal", "value": false }]
+      },
+      "event": {
+        "type": "both_arms_visible",
+        "params": { "ok": false, "messageId": "both_arms_visible", "priority": 1000 }
+      }
+    },
+    {
+      "name": "Torso upright",
+      "priority": 900,
+      "conditions": {
+        "all": [
+          { "fact": "bothArmsVisible", "operator": "equal", "value": true },
+          { "fact": "torsoOk", "operator": "equal", "value": false }
+        ]
+      },
+      "event": {
+        "type": "stand_tall_level",
+        "params": { "ok": false, "messageId": "stand_tall_level", "priority": 900 }
+      }
+    },
+    {
+      "name": "Arms in sync",
+      "priority": 800,
+      "conditions": {
+        "all": [
+          { "fact": "bothArmsVisible", "operator": "equal", "value": true },
+          { "fact": "armsInSync", "operator": "equal", "value": false }
+        ]
+      },
+      "event": {
+        "type": "move_arms_together",
+        "params": { "ok": false, "messageId": "move_arms_together", "priority": 800 }
+      }
+    },
+    {
+      "name": "Wrists over elbows",
+      "priority": 700,
+      "conditions": {
+        "all": [
+          { "fact": "bothArmsVisible", "operator": "equal", "value": true },
+          { "fact": "wristsOverElbows", "operator": "equal", "value": false }
+        ]
+      },
+      "event": {
+        "type": "wrists_over_elbows",
+        "params": { "ok": false, "messageId": "wrists_over_elbows", "priority": 700 }
+      }
+    },
+    {
+      "name": "Press progress: start",
+      "priority": 600,
+      "conditions": {
+        "all": [
+          { "fact": "bothArmsVisible", "operator": "equal", "value": true },
+          { "fact": "pressProgressT", "operator": "lessThan", "value": 0.4 }
+        ]
+      },
+      "event": {
+        "type": "press_up",
+        "params": { "ok": false, "messageId": "press_up", "priority": 600 }
+      }
+    },
+    {
+      "name": "Press progress: finish",
+      "priority": 500,
+      "conditions": {
+        "all": [
+          { "fact": "bothArmsVisible", "operator": "equal", "value": true },
+          { "fact": "pressProgressT", "operator": "lessThan", "value": 0.78 }
+        ]
+      },
+      "event": {
+        "type": "finish_press",
+        "params": { "ok": false, "messageId": "finish_press", "priority": 500 }
+      }
+    }
+  ]
+}
