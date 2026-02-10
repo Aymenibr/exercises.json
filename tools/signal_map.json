@@ -1,0 +1,4 @@
+{
+  "//": "Optional overrides: set \"exercise_name\": \"elbow|knee|hip|shoulder|ankle|wrist_height\". Empty object means heuristics only.",
+  "overrides": {}
+}

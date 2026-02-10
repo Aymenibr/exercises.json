@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "id": "backward_drag",
+  "guardrail": {
+    "required": [
+      "LEFT_ELBOW",
+      "RIGHT_SHOULDER",
+      "RIGHT_WRIST",
+      "RIGHT_ELBOW",
+      "LEFT_WRIST",
+      "LEFT_SHOULDER"
+    ],
+    "frameRequired": [
+      "LEFT_ELBOW",
+      "RIGHT_SHOULDER",
+      "RIGHT_WRIST",
+      "RIGHT_ELBOW",
+      "LEFT_WRIST",
+      "LEFT_SHOULDER"
+    ],
+    "minVisibility": 0.55
+  },
+  "thresholds": {
+    "repAngleTopDeg": 114.52,
+    "repAngleBottomDeg": 157.66,
+    "repProgressTopRaw": 0,
+    "repProgressBottomRaw": 1,
+    "maxArmSyncDiffDeg": 25
+  },
+  "repCounter": {
+    "version": 1,
+    "mode": "full_cycle",
+    "progress": {
+      "op": "sub",
+      "a": {
+        "const": 1
+      },
+      "b": {
+        "op": "avg",
+        "args": [
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": {
+                  "op": "angleDeg2d",
+                  "a": "LEFT_SHOULDER",
+                  "b": "LEFT_ELBOW",
+                  "c": "LEFT_WRIST"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              },
+              "b": {
+                "op": "sub",
+                "a": {
+                  "ref": "thresholds.repAngleTopDeg"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              }
+            },
+            "min": {
+              "const": 0
+            },
+            "max": {
+              "const": 1
+            }
+          },
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": {
+                  "op": "angleDeg2d",
+                  "a": "RIGHT_SHOULDER",
+                  "b": "RIGHT_ELBOW",
+                  "c": "RIGHT_WRIST"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              },
+              "b": {
+                "op": "sub",
+                "a": {
+                  "ref": "thresholds.repAngleTopDeg"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              }
+            },
+            "min": {
+              "const": 0
+            },
+            "max": {
+              "const": 1
+            }
+          }
+        ]
+      },
+      "map": {
+        "type": "invertAngleRange",
+        "topAngleMaxDegRef": "thresholds.repProgressTopRaw",
+        "bottomAngleMinDegRef": "thresholds.repProgressBottomRaw"
+      }
+    },
+    "smoothing": {
+      "emaAlpha": 0.3
+    },
+    "start": {
+      "leaveBottomProgress": 0.22,
+      "minUpVel": 0.00025
+    },
+    "extremes": {
+      "topProgressMin": 0.8,
+      "bottomProgressMax": 0.18
+    },
+    "quality": {
+      "warnBadFraction": 0.15,
+      "rejectBadFraction": 0.3,
+      "minRepMs": 1500,
+      "minDownMs": 600,
+      "maxRepMs": 9000,
+      "syncDelta": 0.2,
+      "maxSwayRatio": 0.14,
+      "maxProgressVelAbs": 0.006
+    }
+  },
+  "facts": {
+    "bothVisible": {
+      "op": "allVisible",
+      "landmarks": [
+        "LEFT_ELBOW",
+        "RIGHT_SHOULDER",
+        "RIGHT_WRIST",
+        "RIGHT_ELBOW",
+        "LEFT_WRIST",
+        "LEFT_SHOULDER"
+      ],
+      "minVisibility": {
+        "ref": "guardrail.minVisibility"
+      }
+    }
+  },
+  "messages": {
+    "no_pose": "No pose detected.",
+    "move_back_visible": "Move back so required landmarks are visible.",
+    "stage_down": "Move to top position.",
+    "stage_up": "Return to start position.",
+    "good": "Good rep."
+  },
+  "rules": [
+    {
+      "name": "Required visible",
+      "priority": 1000,
+      "conditions": {
+        "all": [
+          {
+            "fact": "bothVisible",
+            "operator": "equal",
+            "value": false
+          }
+        ]
+      },
+      "event": {
+        "type": "move_back_visible",
+        "params": {
+          "ok": false,
+          "messageId": "move_back_visible",
+          "priority": 1000
+        }
+      }
+    }
+  ],
+  "comment__auto_generated": "Generated from exercises-json-only; signal=elbow"
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "id": "smith_machine_pistol_squat",
+  "guardrail": {
+    "required": [
+      "RIGHT_HIP",
+      "LEFT_ANKLE",
+      "RIGHT_KNEE",
+      "LEFT_KNEE",
+      "LEFT_HIP",
+      "RIGHT_ANKLE"
+    ],
+    "frameRequired": [
+      "RIGHT_HIP",
+      "LEFT_ANKLE",
+      "RIGHT_KNEE",
+      "LEFT_KNEE",
+      "LEFT_HIP",
+      "RIGHT_ANKLE"
+    ],
+    "minVisibility": 0.55
+  },
+  "thresholds": {
+    "repAngleTopDeg": 92.96,
+    "repAngleBottomDeg": 126.93,
+    "repProgressTopRaw": 0,
+    "repProgressBottomRaw": 1,
+    "maxArmSyncDiffDeg": 25
+  },
+  "repCounter": {
+    "version": 1,
+    "mode": "full_cycle",
+    "progress": {
+      "op": "sub",
+      "a": {
+        "const": 1
+      },
+      "b": {
+        "op": "avg",
+        "args": [
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": {
+                  "op": "angleDeg2d",
+                  "a": "LEFT_HIP",
+                  "b": "LEFT_KNEE",
+                  "c": "LEFT_ANKLE"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              },
+              "b": {
+                "op": "sub",
+                "a": {
+                  "ref": "thresholds.repAngleTopDeg"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              }
+            },
+            "min": {
+              "const": 0
+            },
+            "max": {
+              "const": 1
+            }
+          },
+          {
+            "op": "clamp",
+            "value": {
+              "op": "div",
+              "a": {
+                "op": "sub",
+                "a": {
+                  "op": "angleDeg2d",
+                  "a": "RIGHT_HIP",
+                  "b": "RIGHT_KNEE",
+                  "c": "RIGHT_ANKLE"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              },
+              "b": {
+                "op": "sub",
+                "a": {
+                  "ref": "thresholds.repAngleTopDeg"
+                },
+                "b": {
+                  "ref": "thresholds.repAngleBottomDeg"
+                }
+              }
+            },
+            "min": {
+              "const": 0
+            },
+            "max": {
+              "const": 1
+            }
+          }
+        ]
+      },
+      "map": {
+        "type": "invertAngleRange",
+        "topAngleMaxDegRef": "thresholds.repProgressTopRaw",
+        "bottomAngleMinDegRef": "thresholds.repProgressBottomRaw"
+      }
+    },
+    "smoothing": {
+      "emaAlpha": 0.3
+    },
+    "start": {
+      "leaveBottomProgress": 0.22,
+      "minUpVel": 0.00025
+    },
+    "extremes": {
+      "topProgressMin": 0.8,
+      "bottomProgressMax": 0.18
+    },
+    "quality": {
+      "warnBadFraction": 0.15,
+      "rejectBadFraction": 0.3,
+      "minRepMs": 1500,
+      "minDownMs": 600,
+      "maxRepMs": 9000,
+      "syncDelta": 0.2,
+      "maxSwayRatio": 0.14,
+      "maxProgressVelAbs": 0.006
+    }
+  },
+  "facts": {
+    "bothVisible": {
+      "op": "allVisible",
+      "landmarks": [
+        "RIGHT_HIP",
+        "LEFT_ANKLE",
+        "RIGHT_KNEE",
+        "LEFT_KNEE",
+        "LEFT_HIP",
+        "RIGHT_ANKLE"
+      ],
+      "minVisibility": {
+        "ref": "guardrail.minVisibility"
+      }
+    }
+  },
+  "messages": {
+    "no_pose": "No pose detected.",
+    "move_back_visible": "Move back so required landmarks are visible.",
+    "stage_down": "Move to top position.",
+    "stage_up": "Return to start position.",
+    "good": "Good rep."
+  },
+  "rules": [
+    {
+      "name": "Required visible",
+      "priority": 1000,
+      "conditions": {
+        "all": [
+          {
+            "fact": "bothVisible",
+            "operator": "equal",
+            "value": false
+          }
+        ]
+      },
+      "event": {
+        "type": "move_back_visible",
+        "params": {
+          "ok": false,
+          "messageId": "move_back_visible",
+          "priority": 1000
+        }
+      }
+    }
+  ],
+  "comment__auto_generated": "Generated from exercises-json-only; signal=knee"
+}
